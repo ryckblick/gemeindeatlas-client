@@ -1,0 +1,21 @@
+{
+  "name": "ryckblick/gemeindeatlas-client",
+  "description": "Client for interacting with Gemeindeatlas API",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Eric Hartmann",
+      "email": "kontakt@hartmann-medienproduktion.de"
+    }
+  ],
+  "require": {
+    "php": ">=8.3",
+    "symfony/http-client": "7.2.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Ryckblick\\Gemeindeatlas\\": "src"
+    }
+  }
+}
