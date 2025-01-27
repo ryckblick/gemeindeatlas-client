@@ -7,7 +7,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 class GemeindeatlasClient
 {
     private const string API_URL = 'https://gemeindeatlas.hartmann-medienproduktion.de/api/';
-    
+
     public function __construct(
         private readonly HttpClientInterface $httpClient,
     ){}
@@ -76,10 +76,16 @@ class GemeindeatlasClient
         );
     }
 
-    public function getAllRegionalKeys(): ?array
+    public function getAllRegionalKeys(?int $population_greater_than = null, ?int $population_less_than = null): ?array
     {
+        $query_parts = [];
+        
+        if($population_greater_than !== null) $query_parts['population[gt]'] = $population_greater_than;
+
+        if($population_less_than !== null) $query_parts['population[lt]'] = $population_less_than;
+        
         $response = $this->httpClient
-            ->request('GET', self::API_URL . 'all/regionalkeys')
+            ->request('GET', self::API_URL . 'all/regionalkeys' . (!empty($query_parts) ? '?' . http_build_query($query_parts) : ''))
         ;
 
         if ($response->getStatusCode() !== 200) return null;
