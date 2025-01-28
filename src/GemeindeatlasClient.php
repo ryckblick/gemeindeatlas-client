@@ -76,13 +76,22 @@ class GemeindeatlasClient
         );
     }
 
-    public function getAllRegionalKeys(?int $population_greater_than = null, ?int $population_less_than = null): ?array
+    public function getAllRegionalKeys(
+        ?int $population_greater_than = null,
+        ?int $population_less_than = null,
+        ?bool $include_regierungsbezirk = true,
+        ?bool $include_gemeindeverband = true,
+    ): ?array
     {
         $query_parts = [];
         
         if($population_greater_than !== null) $query_parts['population[gt]'] = $population_greater_than;
 
         if($population_less_than !== null) $query_parts['population[lt]'] = $population_less_than;
+
+        if($include_regierungsbezirk === false) $query_parts['include_regierungsbezirk'] = 'false';
+
+        if($include_gemeindeverband === false) $query_parts['include_gemeindeverband'] = 'false';
         
         $response = $this->httpClient
             ->request('GET', self::API_URL . 'all/regionalkeys' . (!empty($query_parts) ? '?' . http_build_query($query_parts) : ''))
