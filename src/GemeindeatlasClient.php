@@ -12,6 +12,9 @@ class GemeindeatlasClient
         private readonly HttpClientInterface $httpClient,
     ){}
 
+    /**
+     * @return MunicipalityDto[] 
+     */
     public function findAll(
         int $page = 1,
         ?string $name = null,
@@ -44,6 +47,7 @@ class GemeindeatlasClient
         foreach ($response->toArray()['member'] as $rawMunicipality) {
             $returnArray[] = new MunicipalityDto(
                 name: $rawMunicipality['name'],
+                gebietsart: $rawMunicipality['gebietsart'],
                 flaeche: $rawMunicipality['flaeche'],
                 regionalKey: $rawMunicipality['regionalKey'],
                 shortName: $rawMunicipality['shortName'],
@@ -68,6 +72,7 @@ class GemeindeatlasClient
 
         return new MunicipalityDto(
             name: $response['name'],
+            gebietsart: $rawMunicipality['gebietsart'],
             flaeche: $response['flaeche'],
             regionalKey: $response['regionalKey'],
             shortName: $response['shortName'],
