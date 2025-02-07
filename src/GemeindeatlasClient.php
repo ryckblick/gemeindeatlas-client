@@ -72,7 +72,7 @@ class GemeindeatlasClient
 
         return new MunicipalityDto(
             name: $response['name'],
-            gebietsart: $rawMunicipality['gebietsart'],
+            gebietsart: $response['gebietsart'],
             flaeche: $response['flaeche'],
             regionalKey: $response['regionalKey'],
             shortName: $response['shortName'],
